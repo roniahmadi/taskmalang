@@ -182,6 +182,8 @@ class DataController extends Controller
     public function destroy($id)
     {
         // Data::find($id)->delete();
+        $fi = explode(',',file_get_contents('tamu/'.$id));
+        unlink('foto/'.$fi[5]);
         unlink('tamu/'.$id) or die("Couldn't delete file");
         return redirect()->back();
     }
