@@ -62,7 +62,7 @@
 
 
 
-                	@foreach($data as $d)
+                	@foreach($data as $key => $d)
                 		
                 	
                     <tr>
@@ -74,8 +74,8 @@
                       <td><img src="/foto/{{$d[5]}}" width="60" height="70"></td>
                       
                       <td class="text-center" style="width:150px;">
-                          <form method="POST" action="{{route('data.destroy',$d[0])}}" accept-charset="UTF-8">
-                          <a href="{{route('data.edit',$d[0])}}" class="btn btn-primary btn-sm btn-flat" >
+                          <form method="POST" action="{{route('data.destroy',$name[$key])}}" accept-charset="UTF-8">
+                          <a href="{{route('data.edit',$name[$key])}}" class="btn btn-primary btn-sm btn-flat" >
                               Edit
                              </a>
                           <input name="_method" type="hidden" value="DELETE">

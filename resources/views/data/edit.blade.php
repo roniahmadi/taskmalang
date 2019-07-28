@@ -33,7 +33,7 @@
             @endif
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" method="post" action="{{ route('data.update',$data->id) }}" enctype="multipart/form-data">
+            <form class="form-horizontal" method="post" action="{{ route('data.update',$id) }}" enctype="multipart/form-data">
               <div class="box-body">
                 <input type="hidden" name="_method" value="PUT">
                 {{csrf_field()}}
@@ -41,27 +41,27 @@
                  <div class="form-group">
                   <label for="nama" class="col-sm-2 control-label">Nama</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama" placeholder="nama" name="nama" value="{{$data->nama}}">
+                    <input type="text" class="form-control" id="nama" placeholder="nama" name="nama" value="{{$data[0]}}">
                   </div>
                 </div>
 
                  <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">email</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{$data->email}}">
+                    <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{$data[1]}}">
                   </div>
                 </div>
                  <div class="form-group">
                   <label for="date" class="col-sm-2 control-label">date of birth</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="date" placeholder="nama" name="date" value="{{$data->date}}">
+                    <input type="text" class="form-control" id="date" placeholder="nama" name="date" value="{{$data[2]}}">
                   </div>
                 </div>
                  <div class="form-group">
                   <label for="tlp" class="col-sm-2 control-label">no telepon</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tlp" placeholder="nama" name="tlp" value="{{$data->telepon}}">
+                    <input type="text" class="form-control" id="tlp" placeholder="nama" name="tlp" value="{{$data[3]}}">
                   </div>
                 </div>
                  <div class="form-group">
@@ -79,7 +79,7 @@
                   <label for="inputPassword3" class="col-sm-2 control-label">upload foto</label>
 
                   <div class="col-sm-10">
-                    <input type="file" class="form-control" id="foto" placeholder="foto" name="foto" value="{{$data->foto}}">
+                    <input type="file" class="form-control" id="foto" placeholder="foto" name="foto" value="{{$data[5]}}">
                   </div>
                 </div>
                 
@@ -125,6 +125,6 @@
     autoclose:true,
     format:'yyyy-mm-dd'
   })
-  $('select[name=gender]').val('{{$data->gender}}')
+  $('select[name=gender]').val('{{$data[4]}}')
 </script>
 @endsection

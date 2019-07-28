@@ -20,14 +20,16 @@ class DataController extends Controller
     {
         $files1 = scandir('tamu/');
         $arraydata = [];
+        $name = [];
         foreach ($files1 as $key => $value) {
             if ($key != 0 && $key != 1) {
                 $arraydata[] = explode(",",file_get_contents('tamu/'.$value));
+                $name[] = $value;
             }
         }
         $data = $arraydata;
         // $data=Data::orderBy('id','desc')->get();
-        return view('data.list',compact('data')); 
+        return view('data.list',compact('data','name')); 
     }
 
 
@@ -64,7 +66,7 @@ class DataController extends Controller
         $file = $request->file('foto');
         $foto = null;
         if ($file) {
-            $file->move(base_path('public/foto'),$file->getClientOriginalName());
+            $file->move(base_path('public/foto'),date('YmdHis').'_'.$file->getClientOriginalName());
             $foto = $file->getClientOriginalName();
         }
         // $data = new Data();
@@ -114,9 +116,10 @@ class DataController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function edit(Data $data)
+    public function edit($id)
     {
-        return view('data.edit',compact('data'));
+        $data = explode(",",file_get_contents('tamu/'.$id));
+        return view('data.edit',compact('data','id'));
     }
 
     /**
@@ -134,25 +137,34 @@ class DataController extends Controller
             "email" => 'required',
             "date" => 'required',
             'tlp' => 'required',
-            'gender' => 'required'
+            'gender' => 'required',
         ]);
-        $data = Data::find($id);
+        // $data = Data::find($id);
+
+        $fi = explode(',',file_get_contents('tamu/'.$id));
 
         $file = $request->file('foto');
         $foto = null;
         if ($file) {
             $file->move(base_path('public/foto'),$file->getClientOriginalName());
             $foto = $file->getClientOriginalName();
+        }else{
+            // dd(file_get_contents('tamu/'.$id));
+            $foto = $fi[5];
         }
+        $myfile = fopen('tamu/'.$id, "w") or die("Unable to open file!");
+        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender.','.$foto;
+        fwrite($myfile, $text);
+        fclose($myfile);
 
-        $data->nama = $request->nama; 
-        $data->email = $request->email;
-        $data->date = $request->date;
-        $data->telepon = $request->tlp;
-        $data->gender = $request->gender;
-        $data->foto = $foto;
+        // $data->nama = $request->nama; 
+        // $data->email = $request->email;
+        // $data->date = $request->date;
+        // $data->telepon = $request->tlp;
+        // $data->gender = $request->gender;
+        // $data->foto = $foto;
 
-        $data->save();
+        // $data->save();
         return redirect(route('data.index'))->with('flash-notif',[
             "notif" => "success",
             "message" => "Berhasil Diedit"
@@ -168,7 +180,8 @@ class DataController extends Controller
     */
     public function destroy($id)
     {
-        Data::find($id)->delete();
+        // Data::find($id)->delete();
+        unlink('tamu/'.$id) or die("Couldn't delete file");
         return redirect()->back();
     }
 }
