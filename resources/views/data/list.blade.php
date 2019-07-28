@@ -70,7 +70,7 @@
                       <td>{{$d[1]}}</td>
                       <td>{{$d[2]}}</td>
                       <td>{{$d[3]}}</td>
-                      <td>{{$d[4]}}</td>
+                      <td>{{($d[4] == "l")? "Laki laki":"Perempuan"}}</td>
                       <td><img src="/foto/{{$d[5]}}" width="60" height="70"></td>
                       
                       <td class="text-center" style="width:150px;">
