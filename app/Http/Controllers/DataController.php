@@ -67,7 +67,7 @@ class DataController extends Controller
         $foto = null;
         if ($file) {
             $file->move(base_path('public/foto'),date('YmdHis').'_'.$file->getClientOriginalName());
-            $foto = $file->getClientOriginalName();
+            $foto = date('YmdHis').'_'.$file->getClientOriginalName();
         }
         // $data = new Data();
 
@@ -146,8 +146,9 @@ class DataController extends Controller
         $file = $request->file('foto');
         $foto = null;
         if ($file) {
-            $file->move(base_path('public/foto'),$file->getClientOriginalName());
-            $foto = $file->getClientOriginalName();
+            unlink('foto/'.$fi[5]);
+            $file->move(base_path('public/foto'),date('YmdHis').'_'.$file->getClientOriginalName());
+            $foto = date('YmdHis').'_'.$file->getClientOriginalName();
         }else{
             // dd(file_get_contents('tamu/'.$id));
             $foto = $fi[5];
