@@ -71,7 +71,7 @@
                       <td>{{$d[2]}}</td>
                       <td>{{$d[3]}}</td>
                       <td>{{$d[4]}}</td>
-                      <td><img src="/foto/{{$d[0]}}" width="60" height="70"></td>
+                      <td><img src="/foto/{{$d[5]}}" width="60" height="70"></td>
                       
                       <td class="text-center" style="width:150px;">
                           <form method="POST" action="{{route('data.destroy',$d[0])}}" accept-charset="UTF-8">

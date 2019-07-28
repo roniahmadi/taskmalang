@@ -57,7 +57,8 @@ class DataController extends Controller
             "email" => 'required',
             "date" => 'required',
             'tlp' => 'required',
-            'gender' => 'required'
+            'gender' => 'required',
+            'foto'=>'required'
         ]);
 
         $file = $request->file('foto');
@@ -77,7 +78,7 @@ class DataController extends Controller
 
         // $data->save();
 
-        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender;
+        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender.','.$foto;
         $filename = $request->nama.date('YmdHis').".txt";
         $fh = fopen('tamu/'.$filename, "a");
         fwrite($fh, $text);
