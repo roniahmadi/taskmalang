@@ -18,7 +18,15 @@ class DataController extends Controller
     */
     public function index()
     {
-        $data=Data::orderBy('id','desc')->get();
+        $files1 = scandir('tamu/');
+        $arraydata = [];
+        foreach ($files1 as $key => $value) {
+            if ($key != 0 && $key != 1) {
+                $arraydata[] = explode(",",file_get_contents('tamu/'.$value));
+            }
+        }
+        $data = $arraydata;
+        // $data=Data::orderBy('id','desc')->get();
         return view('data.list',compact('data')); 
     }
 
@@ -45,7 +53,7 @@ class DataController extends Controller
     {
     //
         $request->validate([
-            "name" => 'required',
+            "nama" => 'required',
             "email" => 'required',
             "date" => 'required',
             'tlp' => 'required',
@@ -58,19 +66,25 @@ class DataController extends Controller
             $file->move(base_path('public/foto'),$file->getClientOriginalName());
             $foto = $file->getClientOriginalName();
         }
-        $data = new Data();
+        // $data = new Data();
 
-        $data->nama = $request->nama; 
-        $data->email = $request->email;
-        $data->date = $request->date;
-        $data->telepon = $request->tlp;
-        $data->gender = $request->gender;
-        $data->foto = $foto;
+        // $data->nama = $request->nama; 
+        // $data->email = $request->email;
+        // $data->date = $request->date;
+        // $data->telepon = $request->tlp;
+        // $data->gender = $request->gender;
+        // $data->foto = $foto;
 
-        $data->save();
+        // $data->save();
+
+        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender;
+        $filename = $request->nama.date('YmdHis').".txt";
+        $fh = fopen('tamu/'.$filename, "a");
+        fwrite($fh, $text);
+        fclose($fh);
 
     // dd($data);
-        $data=Data::orderBy('id','desc')->get();
+        // $data=Data::orderBy('id','desc')->get();
         return redirect(route('data.index'))->with('flash-notif',[
             "notif" => "success",
             "message" => "Berhasil Disimpan"

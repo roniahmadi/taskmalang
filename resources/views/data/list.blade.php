@@ -65,28 +65,28 @@
                 	@foreach($data as $d)
                 		
                 	
-                <tr>
-                  <td>{{$d->nama}}</td>
-                  <td>{{$d->email}}</td>
-                  <td>{{$d->date}}</td>
-                  <td>{{$d->telepon}}</td>
-                  <td>{{$d->gender}}</td>
-                  <td><img src="/foto/{{$d->foto}}" width="60" height="70"></td>
-                  
-                  <td class="text-center" style="width:150px;">
-                      <form method="POST" action="{{route('data.destroy',$d->id)}}" accept-charset="UTF-8">
-                      <a href="{{route('data.edit',$d->id)}}" class="btn btn-primary btn-sm btn-flat" >
-                          Edit
-                         </a>
-                      <input name="_method" type="hidden" value="DELETE">
-                      <input name="_token" type="hidden" value="{{ csrf_token() }}">
-                      <input type="submit" class="btn btn-danger btn-sm btn-flat" onclick="return confirm('Anda yakin akan menghapus data ini?');" value="Hapus">
+                    <tr>
+                      <td>{{$d[0]}}</td>
+                      <td>{{$d[1]}}</td>
+                      <td>{{$d[2]}}</td>
+                      <td>{{$d[3]}}</td>
+                      <td>{{$d[4]}}</td>
+                      <td><img src="/foto/{{$d[0]}}" width="60" height="70"></td>
+                      
+                      <td class="text-center" style="width:150px;">
+                          <form method="POST" action="{{route('data.destroy',$d[0])}}" accept-charset="UTF-8">
+                          <a href="{{route('data.edit',$d[0])}}" class="btn btn-primary btn-sm btn-flat" >
+                              Edit
+                             </a>
+                          <input name="_method" type="hidden" value="DELETE">
+                          <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                          <input type="submit" class="btn btn-danger btn-sm btn-flat" onclick="return confirm('Anda yakin akan menghapus data ini?');" value="Hapus">
 
-                      </form>
-                  </td> 
-                </tr>
-               
-             @endforeach
+                          </form>
+                      </td> 
+                    </tr>
+                   
+                 @endforeach
                
                 </tbody>
                 <tfoot>
