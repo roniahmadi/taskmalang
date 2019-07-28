@@ -41,27 +41,27 @@
                  <div class="form-group">
                   <label for="nama" class="col-sm-2 control-label">Nama</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="nama" placeholder="nama" name="nama" value="{{$data[0]}}">
+                    <input type="text" class="form-control" id="nama" placeholder="nama" name="nama" value="{{decrypt($data[0])}}">
                   </div>
                 </div>
 
                  <div class="form-group">
                   <label for="inputEmail3" class="col-sm-2 control-label">email</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{$data[1]}}">
+                    <input type="text" class="form-control" id="email" placeholder="email" name="email" value="{{decrypt($data[1])}}">
                   </div>
                 </div>
                  <div class="form-group">
                   <label for="date" class="col-sm-2 control-label">date of birth</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="date" placeholder="nama" name="date" value="{{$data[2]}}">
+                    <input type="text" class="form-control" id="date" placeholder="nama" name="date" value="{{decrypt($data[2])}}">
                   </div>
                 </div>
                  <div class="form-group">
                   <label for="tlp" class="col-sm-2 control-label">no telepon</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="tlp" placeholder="nama" name="tlp" value="{{$data[3]}}">
+                    <input type="text" class="form-control" id="tlp" placeholder="nama" name="tlp" value="{{decrypt($data[3])}}">
                   </div>
                 </div>
                  <div class="form-group">
@@ -125,6 +125,6 @@
     autoclose:true,
     format:'yyyy-mm-dd'
   })
-  $('select[name=gender]').val('{{$data[4]}}')
+  $('select[name=gender]').val('{{decrypt($data[4])}}')
 </script>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 Use App\Data;
 use Auth;
+use Illuminate\Support\Facades\Crypt;
 class DataController extends Controller
 {
     public function __construct()
@@ -23,7 +24,12 @@ class DataController extends Controller
         $name = [];
         foreach ($files1 as $key => $value) {
             if ($key != 0 && $key != 1) {
-                $arraydata[] = explode(",",file_get_contents('tamu/'.$value));
+                $array = explode(",",file_get_contents('tamu/'.$value));
+                $hasil = [];
+                foreach ($array as $keys => $values) {
+                    $hasil[] = decrypt($values);
+                }
+                $arraydata[] = $hasil;
                 $name[] = $value;
             }
         }
@@ -80,7 +86,8 @@ class DataController extends Controller
 
         // $data->save();
 
-        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender.','.$foto;
+        // dd(json_encode($request->nama));
+        $text = encrypt($request->nama).','.encrypt($request->email).','.encrypt($request->date).','.encrypt($request->tlp).','.encrypt($request->gender).','.encrypt($foto);
         $filename = $request->nama.date('YmdHis').".txt";
         $fh = fopen('tamu/'.$filename, "a");
         fwrite($fh, $text);
@@ -146,15 +153,15 @@ class DataController extends Controller
         $file = $request->file('foto');
         $foto = null;
         if ($file) {
-            unlink('foto/'.$fi[5]);
+            unlink('foto/'.decrypt($fi[5]));
             $file->move(base_path('public/foto'),date('YmdHis').'_'.$file->getClientOriginalName());
             $foto = date('YmdHis').'_'.$file->getClientOriginalName();
         }else{
             // dd(file_get_contents('tamu/'.$id));
-            $foto = $fi[5];
+            $foto = decrypt($fi[5]);
         }
         $myfile = fopen('tamu/'.$id, "w") or die("Unable to open file!");
-        $text = $request->nama.','.$request->email.','.$request->date.','.$request->tlp.','.$request->gender.','.$foto;
+        $text = encrypt($request->nama).','.encrypt($request->email).','.encrypt($request->date).','.encrypt($request->tlp).','.encrypt($request->gender).','.encrypt($foto);
         fwrite($myfile, $text);
         fclose($myfile);
 
@@ -183,7 +190,7 @@ class DataController extends Controller
     {
         // Data::find($id)->delete();
         $fi = explode(',',file_get_contents('tamu/'.$id));
-        unlink('foto/'.$fi[5]);
+        unlink('foto/'.decrypt($fi[5]));
         unlink('tamu/'.$id) or die("Couldn't delete file");
         return redirect()->back();
     }
